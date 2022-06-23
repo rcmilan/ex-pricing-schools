@@ -25,6 +25,6 @@
 
         public decimal OriginalPrice { get; set; }
         public decimal FinalPrice { get; set; }
-        public decimal Discount { get => OriginalPrice - FinalPrice; }
+        public decimal Discount { get => Math.Max(OriginalPrice - FinalPrice, 0); }
     }
 }
