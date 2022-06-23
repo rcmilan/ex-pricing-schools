@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using app.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace app.Controllers
 {
@@ -6,9 +7,16 @@ namespace app.Controllers
     [ApiController]
     public class SchoolsController : ControllerBase
     {
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok();
+            return Ok(new SchoolDto());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(new SchoolGridDto());
         }
     }
 }
