@@ -1,4 +1,5 @@
 ﻿using app.DTOs;
+using app.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.Controllers
@@ -14,7 +15,7 @@ namespace app.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] GetSchoolsRequest request)
         {
             return Ok(new SchoolGridDto());
         }
