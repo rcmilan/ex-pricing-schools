@@ -1,6 +1,5 @@
-﻿using app.Database;
-using app.Entities;
-using app.Repositories;
+﻿using app.Attributes;
+using app.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Configuration
@@ -11,7 +10,13 @@ namespace app.Configuration
         {
             services
                 .AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=host.docker.internal,1433;database=abroad;User Id=sa;Password=msSQL@123;"))
-                .AddScoped<IRepository<School, int>, Repository<School, int>>()
+
+                .Scan(scan => scan
+                    .FromCallingAssembly()
+                        .AddClasses(c => c.WithAttribute<ScopedAttribute>())
+                        .AsImplementedInterfaces()
+                        .WithScopedLifetime()
+                )
                 ;
         }
     }
