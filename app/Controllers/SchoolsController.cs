@@ -2,6 +2,8 @@
 using app.Entities;
 using app.Repositories;
 using app.Requests;
+using app.Responses;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.Controllers
@@ -11,24 +13,28 @@ namespace app.Controllers
     public class SchoolsController : ControllerBase
     {
         private readonly IRepository<School, int> repository;
+        private readonly IMapper mapper;
 
-        public SchoolsController(IRepository<School, int> repository)
+        public SchoolsController(IMapper mapper, IRepository<School, int> repository)
         {
+            this.mapper = mapper;
             this.repository = repository;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
-            var x = await repository.GetAsync(id);
+            var school = await repository.GetAsync(id);
 
-            return Ok(new SchoolDto());
+            var result = mapper.Map<SchoolDto>(school);
+
+            return Ok(result);
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetSchoolsRequest request, CancellationToken cancellationToken)
         {
-            return Ok(new SchoolGridDto());
+            return Ok(new SchoolGrid());
         }
     }
 }

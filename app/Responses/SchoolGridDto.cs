@@ -1,6 +1,8 @@
-﻿namespace app.DTOs
+﻿using app.DTOs;
+
+namespace app.Responses
 {
-    public class SchoolGridDto : BaseDto
+    public class SchoolGrid : BaseDto
     {
         public string Name { get; set; }
         public string SlugName { get; set; }
