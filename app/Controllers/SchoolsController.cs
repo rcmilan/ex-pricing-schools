@@ -9,13 +9,13 @@ namespace app.Controllers
     public class SchoolsController : ControllerBase
     {
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
             return Ok(new SchoolDto());
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetSchoolsRequest request)
+        public async Task<IActionResult> Get([FromQuery] GetSchoolsRequest request, CancellationToken cancellationToken)
         {
             return Ok(new SchoolGridDto());
         }
