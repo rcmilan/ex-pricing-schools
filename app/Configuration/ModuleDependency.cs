@@ -10,7 +10,7 @@ namespace app.Configuration
         {
             services
                 .AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=host.docker.internal,1433;database=abroad;User Id=sa;Password=msSQL@123;"))
-
+                .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
                 .Scan(scan => scan
                     .FromCallingAssembly()
                         .AddClasses(c => c.WithAttribute<ScopedAttribute>())
