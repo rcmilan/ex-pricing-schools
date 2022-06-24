@@ -26,6 +26,11 @@ namespace app.Database
                 t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>) && typeof(BaseEntity).IsAssignableFrom(i.GenericTypeArguments[0]))
             );
 
+            SeedData(modelBuilder);
+        }
+
+        private static void SeedData(ModelBuilder modelBuilder)
+        {
             var schools = new List<School>
             {
                 new School { Id = 1, FantasyName = "School A", LegalName = "A School", IsActive = true, CreatedAt = new DateTime(2022,02,02) }
