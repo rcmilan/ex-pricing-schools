@@ -14,6 +14,15 @@ namespace app.Repositories
             _context = context;
         }
 
+        public async Task<TEntity> AddAsync(TEntity entity)
+        {
+            _context.Set<TEntity>().Add(entity);
+
+            await _context.SaveChangesAsync();
+
+            return entity;
+        }
+
         public async Task<TEntity> GetAsync(TId id)
         {
             return await _context

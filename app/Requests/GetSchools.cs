@@ -1,6 +1,6 @@
 ﻿namespace app.Requests
 {
-    public class GetSchoolsRequest
+    public class GetSchools
     {
         public string? Type { get; set; } // Idiomas/Formação
         public string? Language { get; set; }
