@@ -12,6 +12,7 @@ namespace app.Database
         }
 
         public DbSet<School> Schools { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,7 +34,7 @@ namespace app.Database
         {
             var schools = new List<School>
             {
-                new School { Id = 1, FantasyName = "School A", LegalName = "A School", IsActive = true, CreatedAt = new DateTime(2022,02,02) }
+                new School { Id = 1, FantasyName = "School A", LegalName = "A School", IsActive = true, CreatedAt = new DateTime(2022, 02, 02) }
             };
 
             modelBuilder.Entity<School>().HasData(schools);
