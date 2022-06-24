@@ -13,7 +13,7 @@ namespace app.Configuration
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
                 .Scan(scan => scan
                     .FromCallingAssembly()
-                        .AddClasses(c => c.WithAttribute<ScopedAttribute>())
+                        .AddClasses(c => c.WithAttribute<ScopedLifetimeAttribute>())
                         .AsImplementedInterfaces()
                         .WithScopedLifetime()
                 )

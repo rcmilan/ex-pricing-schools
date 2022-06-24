@@ -4,7 +4,7 @@ using app.Entities;
 
 namespace app.Repositories
 {
-    [Scoped]
+    [ScopedLifetime]
     public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : BaseEntity
     {
         private readonly DatabaseContext _context;
