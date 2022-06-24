@@ -12,8 +12,8 @@ namespace app.Controllers
     [ApiController]
     public class SchoolsController : ControllerBase
     {
-        private readonly IRepository<School, int> repository;
         private readonly IMapper mapper;
+        private readonly IRepository<School, int> repository;
 
         public SchoolsController(IMapper mapper, IRepository<School, int> repository)
         {
