@@ -1,5 +1,6 @@
 ﻿using app.DTOs;
 using app.Entities;
+using app.Requests;
 using AutoMapper;
 
 namespace app.MappingProfiles
@@ -10,6 +11,9 @@ namespace app.MappingProfiles
         {
             CreateMap<School, SchoolDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FantasyName));
+
+
+            CreateMap<AddSchool, School>();
         }
     }
 }

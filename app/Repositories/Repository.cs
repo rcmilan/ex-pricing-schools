@@ -14,13 +14,22 @@ namespace app.Repositories
             _context = context;
         }
 
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            _context.Set<TEntity>().Add(entity);
+            await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
 
             return entity;
+        }
+
+        public async Task<IEnumerable<TEntity>> AddAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
+        {
+            await _context.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return entities;
         }
 
         public async Task<TEntity> GetAsync(TId id)
