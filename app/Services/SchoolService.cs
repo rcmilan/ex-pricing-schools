@@ -22,12 +22,17 @@ namespace app.Services
 
         public async Task<SchoolDto> GetDto(int id)
         {
-            var school = await _repository.Context.Schools
+            School? school = await Get(id);
+
+            return _mapper.Map<SchoolDto>(school);
+        }
+
+        private async Task<School> Get(int id)
+        {
+            return await _repository.Context.Schools
                 .Include(s => s.Courses)
                     .ThenInclude(c => c.PriceRanges)
                 .SingleOrDefaultAsync(s => s.Id.Equals(id));
-
-            return _mapper.Map<SchoolDto>(school);
         }
     }
 }
