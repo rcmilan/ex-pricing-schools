@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using app.Requests;
+using Bogus;
 
 namespace app.tests.Controllers
 {
@@ -14,32 +15,43 @@ namespace app.tests.Controllers
             await using var application = new WebAppFactory("Development");
             var client = application.CreateClient();
 
-            IEnumerable<AddSchool> schools = new List<AddSchool>
-            {
-                new AddSchool
-                {
-                    FantasyName = "",
-                    LegalName = "",
-                    Courses = new List<AddCourse>
-                    {
-                        new AddCourse
+            var schools = new Faker<AddSchool>()
+                .RuleFor(s => s.FantasyName, f => f.Commerce.Random.Words(3))
+                .RuleFor(s => s.LegalName, f => f.Company.CompanyName())
+                .RuleFor(s => s.Courses,
+                    new Faker<AddCourse>()
+                    .RuleFor(c => c.BookChargedBefore, f => f.Random.Bool())
+                    .RuleFor(c => c.Title, f => f.Commerce.ProductName())
+                    .RuleFor(c => c.RegistrationFee, f => f.Random.Decimal(0, 500))
+                    .RuleFor(c => c.PriceRanges,
+                        new List<AddCoursePriceRange>
                         {
-                            BookChargedBefore = false,
-                            RegistrationFee = 0,
-                            Title = "",
-                            PriceRanges = new List<AddCoursePriceRange>
-                            {
-                                new AddCoursePriceRange
-                                {
-                                    Price = 0,
-                                    RangeFrom = 0,
-                                    RangeTo = 0
-                                }
-                            }
+                            new Faker<AddCoursePriceRange>()
+                                .RuleFor(pr => pr.Price, f => f.Random.Decimal(200, 500))
+                                .RuleFor(pr => pr.RangeFrom, 2)
+                                .RuleFor(pr => pr.RangeTo, 5)
+                                .Generate(),
+                            new Faker<AddCoursePriceRange>()
+                                .RuleFor(pr => pr.Price, f => f.Random.Decimal(100, 199))
+                                .RuleFor(pr => pr.RangeFrom, 6)
+                                .RuleFor(pr => pr.RangeTo, 10)
+                                .Generate(),
+                            new Faker<AddCoursePriceRange>()
+                                .RuleFor(pr => pr.Price, f => f.Random.Decimal(50, 99))
+                                .RuleFor(pr => pr.RangeFrom, 11)
+                                .RuleFor(pr => pr.RangeTo, 25)
+                                .Generate(),
+                            new Faker<AddCoursePriceRange>()
+                                .RuleFor(pr => pr.Price, f => f.Random.Decimal(10, 49))
+                                .RuleFor(pr => pr.RangeFrom, 26)
+                                .RuleFor(pr => pr.RangeTo, 52)
+                                .Generate(),
                         }
-                    }
-                }
-            };
+                    )
+                    .GenerateBetween(1, 10)
+                )
+                .Generate(100);
+
 
             var byteContent = schools.BuildByteContent();
 
@@ -47,7 +59,7 @@ namespace app.tests.Controllers
             var response = await client.PostAsync(BASE_PATH, byteContent, CancellationToken.None);
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
     }
 }
