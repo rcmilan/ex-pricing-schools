@@ -1,6 +1,6 @@
-﻿using System.Net;
-using app.Requests;
+﻿using app.Requests;
 using Bogus;
+using System.Net;
 
 namespace app.tests.Controllers
 {
@@ -51,7 +51,6 @@ namespace app.tests.Controllers
                     .GenerateBetween(1, 10)
                 )
                 .Generate(100);
-
 
             var byteContent = schools.BuildByteContent();
 

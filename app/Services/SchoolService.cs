@@ -22,7 +22,7 @@ namespace app.Services
 
         public async Task<SchoolDto> GetDto(int id)
         {
-            School? school = await Get(id);
+            var school = await Get(id);
 
             return _mapper.Map<SchoolDto>(school);
         }
