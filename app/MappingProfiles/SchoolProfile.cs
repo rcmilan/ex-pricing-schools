@@ -12,8 +12,9 @@ namespace app.MappingProfiles
             CreateMap<School, SchoolDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FantasyName));
 
-
-            CreateMap<AddSchool, School>();
+            CreateMap<AddSchool, School>()
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true))
+                ;
         }
     }
 }

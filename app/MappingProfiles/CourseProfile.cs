@@ -8,9 +8,13 @@ namespace app.MappingProfiles
     {
         public CourseProfile()
         {
-            CreateMap<AddCourse, Course>();
+            CreateMap<AddCourse, Course>()
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true))
+                ;
 
-            CreateMap<AddCoursePriceRange, CoursePriceRange>();
+            CreateMap<AddCoursePriceRange, CoursePriceRange>()
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true))
+                ;
         }
     }
 }

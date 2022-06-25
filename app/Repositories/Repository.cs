@@ -32,11 +32,6 @@ namespace app.Repositories
             return entities;
         }
 
-        public async Task<TEntity> GetAsync(TId id)
-        {
-            return await _context
-                .Set<TEntity>()
-                .FindAsync(id);
-        }
+        public async Task<TEntity> GetAsync(TId id) => await _context.Set<TEntity>().FindAsync(id);
     }
 }
