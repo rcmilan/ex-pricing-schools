@@ -14,6 +14,8 @@ namespace app.Repositories
             _context = context;
         }
 
+        public DatabaseContext Context => _context;
+
         public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
             await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
